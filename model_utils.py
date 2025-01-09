@@ -1,4 +1,4 @@
-#from moviepy.editor import VideoFileClip
+from moviepy.editor import VideoFileClip
 from ultralytics import YOLO
 import streamlit as st
 from streamlit_webrtc import VideoTransformerBase
