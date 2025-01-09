@@ -10,7 +10,6 @@ logger = logging.getLogger(__name__)
 
 os.environ["TWILIO_ACCOUNT_SID"] = st.secrets["TWILIO_ACCOUNT_SID"]
 os.environ["TWILIO_AUTH_TOKEN"] = st.secrets["TWILIO_AUTH_KEY"]
-st.write(os.environ["TWILIO_ACCOUNT_SID"], os.environ["TWILIO_AUTH_TOKEN"])
 
 def get_ice_servers():
     """Use Twilio's TURN server because Streamlit Community Cloud has changed
@@ -24,6 +23,7 @@ def get_ice_servers():
     try:
         account_sid = os.environ["TWILIO_ACCOUNT_SID"]
         auth_token = os.environ["TWILIO_AUTH_TOKEN"]
+        st.write(account_sid)
     except KeyError:
         logger.warning(
             "Twilio credentials are not set. Fallback to a free STUN server from Google."  # noqa: E501
