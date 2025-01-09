@@ -38,7 +38,7 @@ def get_predictions(source_path):
         for item in os.listdir(PREDICTION_PATH):
             shutil.copy(os.path.join(PREDICTION_PATH, item), os.path.join(PREDICTION_NEW_PATH, item))
             if item.endswith(VIDEO_EXTENSION):
-                utils.convert_mp4_H264(os.path.join(PREDICTION_NEW_PATH, item), os.path.join(PREDICTION_NEW_PATH, FINAL_PREDICTION_VIDEO))
+                model_utils.convert_mp4_H264(os.path.join(PREDICTION_NEW_PATH, item), os.path.join(PREDICTION_NEW_PATH, FINAL_PREDICTION_VIDEO))
                 print("Video Conversion Complete!!!!!!")
             os.remove(os.path.join(PREDICTION_PATH, item))
 
