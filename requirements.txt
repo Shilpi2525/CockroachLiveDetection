@@ -1,5 +1,5 @@
-ffmpeg
-moviepy
+ffmpeg==1.4
+moviepy==1.0.3
 streamlit-webrtc
 ultralytics
 twilio
