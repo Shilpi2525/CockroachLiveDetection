@@ -4,6 +4,7 @@ from streamlit_webrtc import webrtc_streamer, WebRtcMode
 import io
 import os
 import shutil
+import model_utils
 from model_utils import load_yolo_model
 from turn import get_ice_servers
 
