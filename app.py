@@ -53,7 +53,7 @@ def get_predictions(source_path):
 st.title("Cockroach Detection Detection")
 
 #set an image
-st.image(IMAGE_ADDRESS , caption = "Sign Language Detection")
+st.image(IMAGE_ADDRESS , caption = "Cockroach Detection")
 
 #detection dashboard
 st.header("Detection Dashboard 📷")
@@ -66,7 +66,7 @@ with st.sidebar:
     user_image = None
     user_video = None
     #set a header
-    st.header("Sign Language Detection")
+    st.header("Cockroach Detection")
 
     #choose a method
     st.subheader("Select a method")
