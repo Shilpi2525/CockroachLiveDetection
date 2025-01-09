@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 os.environ["TWILIO_ACCOUNT_SID"] = st.secrets["TWILIO_ACCOUNT_SID"]
 os.environ["TWILIO_AUTH_TOKEN"] = st.secrets["TWILIO_AUTH_KEY"]
-print(os.environ["TWILIO_ACCOUNT_SID"], os.environ["TWILIO_AUTH_TOKEN"])
+st.write(os.environ["TWILIO_ACCOUNT_SID"], os.environ["TWILIO_AUTH_TOKEN"])
 
 def get_ice_servers():
     """Use Twilio's TURN server because Streamlit Community Cloud has changed
@@ -31,11 +31,11 @@ def get_ice_servers():
         return [{"urls": ["stun:stun.l.google.com:19302"]}]
 
     client = Client(account_sid, auth_token)
-    print("Success")
+    st.write("Success")
 
     try:
         token = client.tokens.create()
-        print("Failed")
+        st.write("Failed")
     except TwilioRestException as e:
         st.warning(
             f"Error occurred while accessing Twilio API. Fallback to a free STUN server from Google. ({e})"  # noqa: E501
