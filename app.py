@@ -139,9 +139,39 @@ if option == RADIO_WEBCAM:
        # async_processing  =True
     #)
 
-    webrtc_streamer(
-        key="example",
+
+#    webrtc_streamer(
+ #       key="example",
+  #      mode=WebRtcMode.SENDRECV,
+   #     rtc_configuration={"iceServers": get_ice_servers()},
+    #    media_stream_constraints={"video": True, "audio": False},
+     #   )
+
+
+def transform(self, frame: av.VideoFrame) -> np.ndarray:
+            image = frame.to_ndarray(format="bgr24")
+            blob = cv2.dnn.blobFromImage(
+                cv2.resize(image, (300, 300)), 0.007843, (300, 300), 127.5
+            )
+            self._net.setInput(blob)
+            detections = self._net.forward()
+            annotated_image, labels = self._annotate_image(image, detections)
+            # TODO: Show labels
+
+            return annotated_image
+
+
+
+webrtc_ctx = webrtc_streamer(
+        key="object-detection",
         mode=WebRtcMode.SENDRECV,
-        rtc_configuration={"iceServers": get_ice_servers()},
-        media_stream_constraints={"video": True, "audio": False},
-        )
+        client_settings=WEBRTC_CLIENT_SETTINGS,
+        video_transformer_class=NNVideoTransformer,
+        async_transform=True,
+    )
+
+    confidence_threshold = st.slider(
+        "Confidence threshold", 0.0, 1.0, DEFAULT_CONFIDENCE_THRESHOLD, 0.05
+    )
+    if webrtc_ctx.video_transformer:
+        webrtc_ctx.video_transformer.confidence_threshold = confidence_threshold
