@@ -26,6 +26,11 @@ FINAL_PREDICTION_VIDEO = "output.mp4"
 VIDEO_EXTENSION = ".avi"
 
 
+WEBRTC_CLIENT_SETTINGS = ClientSettings(
+    rtc_configuration={"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]},
+    media_stream_constraints={"video": True, "audio": True},
+)
+
 #load the pytorch weights
 model = load_yolo_model(MODEL_NAME)
 
