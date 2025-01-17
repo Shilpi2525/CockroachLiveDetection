@@ -3,6 +3,7 @@ from PIL import Image
 from streamlit_webrtc import webrtc_streamer, WebRtcMode
 import io
 import av
+import numpy as np
 import os
 import shutil
 import model_utils
