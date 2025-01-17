@@ -162,16 +162,20 @@ if video_results:
 
 
 if option == RADIO_WEBCAM:
-    def transform(self, frame: av.VideoFrame) -> np.ndarray:
-        image = frame.to_ndarray(format="bgr24")
-        blob = cv2.dnn.blobFromImage(
-            cv2.resize(image, (300, 300)), 0.007843, (300, 300), 127.5
-        )
-        self._net.setInput(blob)
-        detections = self._net.forward()
-        annotated_image, labels = self._annotate_image(image, detections)
-        # TODO: Show labels
-        return annotated_image
+
+    class NNVideoTransformer(VideoTransformerBase):
+        confidence_threshold: float
+        
+        def transform(self, frame: av.VideoFrame) -> np.ndarray:
+            image = frame.to_ndarray(format="bgr24")
+            blob = cv2.dnn.blobFromImage(
+                cv2.resize(image, (300, 300)), 0.007843, (300, 300), 127.5
+            )
+            self._net.setInput(blob)
+            detections = self._net.forward()
+            annotated_image, labels = self._annotate_image(image, detections)
+            # TODO: Show labels
+            return annotated_image
 
     webrtc_ctx = webrtc_streamer(
         key="object-detection",
