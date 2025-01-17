@@ -1,6 +1,12 @@
 import streamlit as st
 from PIL import Image
-from streamlit_webrtc import webrtc_streamer, WebRtcMode
+#from streamlit_webrtc import webrtc_streamer, WebRtcMode,ClientSettings
+from streamlit_webrtc import (
+    ClientSettings,
+    VideoTransformerBase,
+    WebRtcMode,
+    webrtc_streamer,
+)
 import io
 import av
 import numpy as np
