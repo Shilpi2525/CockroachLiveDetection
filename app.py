@@ -162,7 +162,7 @@ def transform(self, frame: av.VideoFrame) -> np.ndarray:
 
 
 
-webrtc_ctx = webrtc_streamer(
+    webrtc_ctx = webrtc_streamer(
         key="object-detection",
         mode=WebRtcMode.SENDRECV,
         client_settings=WEBRTC_CLIENT_SETTINGS,
