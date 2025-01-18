@@ -153,10 +153,11 @@ if option == RADIO_WEBCAM:
     #)
 
 
-   webrtc_streamer(
-       key="example",
-       mode=WebRtcMode.SENDRECV,
-       rtc_configuration={"iceServers": get_ice_servers()},
-       media_stream_constraints={"video": True, "audio": False},
-       )
-
+   # webrtc_streamer(
+   #     key="example",
+   #     mode=WebRtcMode.SENDRECV,
+   #     rtc_configuration={"iceServers": get_ice_servers()},
+   #     media_stream_constraints={"video": True, "audio": False},
+   #     )
+    webrtc_streamer(
+   #     key="example")
