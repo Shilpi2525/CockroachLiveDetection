@@ -160,4 +160,4 @@ if option == RADIO_WEBCAM:
    #     media_stream_constraints={"video": True, "audio": False},
    #     )
     webrtc_streamer(
-      key="example")
+      key="sample")
