@@ -141,7 +141,7 @@ if video_results:
     st.subheader("Predicted Video")
     st.video(os.path.join(PREDICTION_NEW_PATH, FINAL_PREDICTION_VIDEO))
 
-#if option == RADIO_WEBCAM:
+if option == RADIO_WEBCAM:
  #   conf = 0.2
     #webrtc_streamer(
       # key="example",
@@ -153,84 +153,10 @@ if video_results:
     #)
 
 
-#    webrtc_streamer(
- #       key="example",
-  #      mode=WebRtcMode.SENDRECV,
-   #     rtc_configuration={"iceServers": get_ice_servers()},
-    #    media_stream_constraints={"video": True, "audio": False},
-     #   )
+   webrtc_streamer(
+       key="example",
+       mode=WebRtcMode.SENDRECV,
+       rtc_configuration={"iceServers": get_ice_servers()},
+       media_stream_constraints={"video": True, "audio": False},
+       )
 
-
-if option == RADIO_WEBCAM:
-
-    def app_object_detection():
-    """Object detection demo with MobileNet SSD."""
-    MODEL_URL = "https://github.com/robmarkcole/object-detection-app/raw/master/model/MobileNetSSD_deploy.caffemodel"
-    MODEL_LOCAL_PATH = HERE / "./models/MobileNetSSD_deploy.caffemodel"
-    PROTOTXT_URL = "https://github.com/robmarkcole/object-detection-app/raw/master/model/MobileNetSSD_deploy.prototxt.txt"
-    PROTOTXT_LOCAL_PATH = HERE / "./models/MobileNetSSD_deploy.prototxt.txt"
-
-    CLASSES = [
-        "background", "aeroplane", "bicycle", "bird", "boat", "bottle", "bus", "car", 
-        "cat", "chair", "cow", "diningtable", "dog", "horse", "motorbike", "person", 
-        "pottedplant", "sheep", "sofa", "train", "tvmonitor"
-    ]
-    COLORS = np.random.uniform(0, 255, size=(len(CLASSES), 3))
-
-    download_file(MODEL_URL, MODEL_LOCAL_PATH, expected_size=23147564)
-    download_file(PROTOTXT_URL, PROTOTXT_LOCAL_PATH, expected_size=29353)
-
-    DEFAULT_CONFIDENCE_THRESHOLD = 0.5
-
-    class NNVideoTransformer(VideoTransformerBase):
-        confidence_threshold: float
-
-        def __init__(self) -> None:
-            self._net = cv2.dnn.readNetFromCaffe(
-                str(PROTOTXT_LOCAL_PATH), str(MODEL_LOCAL_PATH)
-            )
-            self.confidence_threshold = 0.8
-
-        def _annotate_image(self, image, detections):
-            # loop over the detections
-            (h, w) = image.shape[:2]
-            for i in np.arange(0, detections.shape[2]):
-                confidence = detections[0, 0, i, 2]
-                if confidence > self.confidence_threshold:
-                    idx = int(detections[0, 0, i, 1])
-                    box = detections[0, 0, i, 3:7] * np.array([w, h, w, h])
-                    (startX, startY, endX, endY) = box.astype("int")
-                    label = f"{CLASSES[idx]}: {round(confidence * 100, 2)}%"
-                    cv2.rectangle(image, (startX, startY), (endX, endY), COLORS[idx], 2)
-                    y = startY - 15 if startY - 15 > 15 else startY + 15
-                    cv2.putText(
-                        image,
-                        label,
-                        (startX, y),
-                        cv2.FONT_HERSHEY_SIMPLEX,
-                        0.5,
-                        COLORS[idx],
-                        2,
-                    )
-            return image
-
-        def transform(self, frame: av.VideoFrame) -> np.ndarray:
-            image = frame.to_ndarray(format="bgr24")
-            blob = cv2.dnn.blobFromImage(
-                cv2.resize(image, (300, 300)), 0.007843, (300, 300), 127.5
-            )
-            self._net.setInput(blob)
-            detections = self._net.forward()
-            image = self._annotate_image(image, detections)
-            return image
-
-    webrtc_streamer(
-        key="object-detection",
-        mode=WebRtcMode.SENDRECV,
-        client_settings=WEBRTC_CLIENT_SETTINGS,
-        video_transformer_class=NNVideoTransformer,
-        async_transform=True,
-    )
-
-
-    
