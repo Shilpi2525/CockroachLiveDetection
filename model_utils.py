@@ -33,10 +33,18 @@ class MyVideoTransformer(VideoTransformerBase):
         self.model = model
 
     def recv(self, frame):
+        # image = frame.to_ndarray(format="bgr24")
+        # processed_image = self._display_detected_frames(image)
+        # st.image(processed_image, caption='Detected Video', channels="BGR", use_column_width=True)
+        # return av.VideoFrame.from_ndarray(processed_image, format="bgr24")
+
+        try:
         image = frame.to_ndarray(format="bgr24")
-        processed_image = self._display_detected_frames(image)
-        st.image(processed_image, caption='Detected Video', channels="BGR", use_column_width=True)
-        return av.VideoFrame.from_ndarray(processed_image, format="bgr24")
+        # Add object detection processing here...
+        return av.VideoFrame.from_ndarray(image, format="bgr24")
+    except Exception as e:
+        logger.error(f"Error in video_frame_callback: {e}")
+        return frame
 
     def _display_detected_frames(self, image):
         orig_h, orig_w = image.shape[0:2]
