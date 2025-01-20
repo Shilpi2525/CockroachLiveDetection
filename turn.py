@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 os.environ["TWILIO_ACCOUNT_SID"] = st.secrets["TWILIO_ACCOUNT_SID"]
 os.environ["TWILIO_AUTH_TOKEN"] = st.secrets["TWILIO_AUTH_KEY"]
 
-@st.cache_data
+
 def get_ice_servers():
     """Use Twilio's TURN server because Streamlit Community Cloud has changed
     its infrastructure and WebRTC connection cannot be established without TURN server now.  # noqa: E501
