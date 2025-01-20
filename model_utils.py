@@ -39,12 +39,12 @@ class MyVideoTransformer(VideoTransformerBase):
         # return av.VideoFrame.from_ndarray(processed_image, format="bgr24")
 
         try:
-        image = frame.to_ndarray(format="bgr24")
-        # Add object detection processing here...
-        return av.VideoFrame.from_ndarray(image, format="bgr24")
+            image = frame.to_ndarray(format="bgr24")
+            # Add object detection processing here...
+            return av.VideoFrame.from_ndarray(image, format="bgr24")
         except Exception as e:
-        logger.error(f"Error in video_frame_callback: {e}")
-        return frame
+            logger.error(f"Error in video_frame_callback: {e}")
+            return frame
 
     def _display_detected_frames(self, image):
         orig_h, orig_w = image.shape[0:2]
