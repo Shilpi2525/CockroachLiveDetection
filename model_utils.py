@@ -42,7 +42,7 @@ class MyVideoTransformer(VideoTransformerBase):
         image = frame.to_ndarray(format="bgr24")
         # Add object detection processing here...
         return av.VideoFrame.from_ndarray(image, format="bgr24")
-    except Exception as e:
+        except Exception as e:
         logger.error(f"Error in video_frame_callback: {e}")
         return frame
 
