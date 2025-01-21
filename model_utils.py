@@ -3,11 +3,8 @@ from ultralytics import YOLO
 import streamlit as st
 import numpy as np
 from PIL import Image
-import av
 
-
-def convert_mp4_H264(input_file:str, output_file:str) -> None:
-
+def convert_mp4_H264(input_file: str, output_file: str) -> None:
     # Load the video clip
     clip = VideoFileClip(input_file)
 
@@ -19,10 +16,6 @@ def convert_mp4_H264(input_file:str, output_file:str) -> None:
 
     print("Conversion complete.")
 
-
 @st.cache_resource
 def load_yolo_model(model_path):
-
     return YOLO(model_path)
-
-
