@@ -7,7 +7,6 @@ import os
 import shutil
 import model_utils
 from model_utils import load_yolo_model
-from turn import get_ice_servers
 
 
 MODEL_NAME = "cockroach_detection.pt"
