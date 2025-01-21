@@ -1,12 +1,6 @@
 import streamlit as st
 from PIL import Image
 #from streamlit_webrtc import webrtc_streamer, WebRtcMode,ClientSettings
-from streamlit_webrtc import (
-    ClientSettings,
-    VideoTransformerBase,
-    WebRtcMode,
-    webrtc_streamer,
-)
 import io
 import av
 import numpy as np
@@ -21,7 +15,7 @@ MODEL_NAME = "cockroach_detection.pt"
 IMAGE_ADDRESS = "https://i.ytimg.com/vi/bEwCA_nrY5Q/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLB4y6YJGxw6oVxFm-Uucbrjfqhu2Q"
 RADIO_IMAGE = "Image"
 RADIO_VIDEO = "Video"
-RADIO_WEBCAM = "Webcam"
+#RADIO_WEBCAM = "Webcam"
 USER_IMAGE_NAME = "user_input.png"
 USER_VIDEO_NAME = "user_video.avi"
 PREDICTION_PATH = "runs/detect/predict"
@@ -31,11 +25,6 @@ PREDICTION_VIDEO_PATH = PREDICTION_NEW_PATH + "/" + USER_VIDEO_NAME
 FINAL_PREDICTION_VIDEO = "output.mp4"
 VIDEO_EXTENSION = ".avi"
 
-
-WEBRTC_CLIENT_SETTINGS = ClientSettings(
-    rtc_configuration={"iceServers": [{"urls": ["stun:stun.l.google.com:19302"]}]},
-    media_stream_constraints={"video": True, "audio": True},
-)
 
 #load the pytorch weights
 model = load_yolo_model(MODEL_NAME)
@@ -63,7 +52,7 @@ def get_predictions(source_path):
 
 
 #web application
-st.title("Cockroach Detection Detection")
+st.title("Cockroach Detection")
 
 #set an image
 st.image(IMAGE_ADDRESS , caption = "Cockroach Detection")
@@ -85,7 +74,7 @@ with st.sidebar:
     st.subheader("Select a method")
 
     #set a radio button
-    option = st.radio("Select an input option", [RADIO_IMAGE , RADIO_VIDEO, RADIO_WEBCAM], captions=["Detect signs on Images", "Detect signs on videos", "Real time detection"])
+    option = st.radio("Select an input option", [RADIO_IMAGE , RADIO_VIDEO], captions=["Detect signs on Images", "Detect signs on videos"])
 
     #if image
     if option == RADIO_IMAGE:
@@ -141,23 +130,4 @@ if video_results:
     st.subheader("Predicted Video")
     st.video(os.path.join(PREDICTION_NEW_PATH, FINAL_PREDICTION_VIDEO))
 
-if option == RADIO_WEBCAM:
- #   conf = 0.2
-    #webrtc_streamer(
-      # key="example",
-      # mode = WebRtcMode.SENDRECV,
-       # video_processor_factory=lambda : model_utils.MyVideoTransformer(conf,model),
-       # rtc_configuration={"iceServers": get_ice_servers()},
-       # media_stream_constraints={"video": True, "audio": False},
-       # async_processing  =True
-    #)
 
-
-   # webrtc_streamer(
-   #     key="example",
-   #     mode=WebRtcMode.SENDRECV,
-   #     rtc_configuration={"iceServers": get_ice_servers()},
-   #     media_stream_constraints={"video": True, "audio": False},
-   #     )
-    webrtc_streamer(
-      key="sample")
