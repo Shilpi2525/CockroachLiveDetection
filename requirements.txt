@@ -1,4 +1,4 @@
 ffmpeg==1.4
 moviepy==1.0.3
 ultralytics==8.3.9
-av
+opencv-python-headless
